@@ -61,19 +61,63 @@ class Job {
         cardBody.appendChild(btnGroup);
         card.appendChild(cardBody);
 
-        this.AddEventBtnSeeDetails(btnSeeDetails, btnGroup);
+        this.AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup);
         this.AddEventBtnEdit(btnEdit);
         this.AddEventBtnDelete(btnDelete, card, this);
 
         return card;
     }
 
-    AddEventBtnSeeDetails(btn, btnGroup) {
-
+    AddEventBtnSeeDetails(btn, description, btnGroup) {
+        btn.addEventListener('click', async () => {
+            const cards = document.getElementsByClassName('card');
+            let jobs = await GetJobs();
+            let value = jobs.map(job => job.id);
+            for (let i = 0; i < cards.length; i++) {
+                if (i !== value.indexOf(this.id)) {
+                    cards[i].classList.add('d-none');
+                }
+                else {
+                    cards[i].classList.add('min-width-500')
+                }
+            }
+            description.classList.remove('text-overflow');
+            btnGroup.classList.remove('d-none');
+            btn.classList.add('d-none');
+        })
     }
 
     AddEventBtnEdit(btn) {
+        btn.addEventListener('click', () => {
+            const formContainer = document.getElementById('form-container');
+            formContainer.classList.remove('d-none');
+            const frmEdit = document.getElementById('frm-edit-job');
+            let inputs = ['name', 'description', 'location', 'seniority', 'category']
+            inputs.forEach(input => {
+                document.getElementById(input).value = this[input]
+            });
+            frmEdit.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let validate = true;
+                inputs.forEach((input, i) => {
+                    if (e.target[input].value == '' && i <= 2) {
+                        validate = false;
+                    }
+                    this[input] = e.target[input].value
+                });
+                if (validate) {
+                    const options = {
+                        method: 'PUT',
+                        headers: { 'Content-type': 'application/json' },
+                        body: JSON.stringify(this)
+                    }
+                    fetch(`https://62ae56a6645d00a28a07201f.mockapi.io/Jobs/${this.id}`, options).then(() => {
+                        window.location.reload();
+                    });
 
+                }
+            })
+        });
     }
 
     AddEventBtnDelete(btn, card) {
