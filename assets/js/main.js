@@ -1,3 +1,73 @@
+const AddEventBtnSeeDetails = (btn, description, btnGroup, job) => {
+    btn.addEventListener('click', async () => {
+        const cards = document.getElementsByClassName('card');
+        let jobs = await GetJobs();
+        let value = jobs.map(job => job.id);
+        for (let i = 0; i < cards.length; i++) {
+            if (i !== value.indexOf(job.id)) {
+                cards[i].classList.add('d-none');
+            }
+            else {
+                cards[i].classList.add('min-width-500')
+            }
+        }
+        description.classList.remove('text-overflow');
+        btnGroup.classList.remove('d-none');
+        btn.classList.add('d-none');
+    })
+}
+
+const AddEventBtnEdit = (btn, job) => {
+    btn.addEventListener('click', () => {
+        const formContainer = document.getElementById('form-container');
+        formContainer.classList.remove('d-none');
+        const frmEdit = document.getElementById('frm-edit-job');
+        let inputs = ['name', 'description', 'location', 'seniority', 'category']
+        inputs.forEach(input => {
+            document.getElementById(input).value = job[input]
+        });
+        frmEdit.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let validate = true;
+            inputs.forEach((input, i) => {
+                if (e.target[input].value == '' && i <= 2) {
+                    validate = false;
+                }
+                job[input] = e.target[input].value
+            });
+            if (validate) {
+                const options = {
+                    method: 'PUT',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify(job)
+                }
+                fetch(`https://62ae56a6645d00a28a07201f.mockapi.io/Jobs/${job.id}`, options).then(() => {
+                    window.location.reload();
+                });
+
+            }
+        })
+    });
+}
+
+const AddEventBtnDelete = (btn, card, job) => {
+    btn.addEventListener('click', () => {
+        const alert = document.getElementById('alert-delete');
+        const btnDelete = document.getElementById('confirm-delete');
+        const btnCancel = document.getElementById('cancel-delete');
+        alert.classList.remove('d-none');
+        card.classList.add('d-none');
+        btnDelete.addEventListener('click', () => {
+            fetch(`https://62ae56a6645d00a28a07201f.mockapi.io/Jobs/${job.id}`, {
+                method: 'DELETE'
+            }).then(() => { window.location.reload(); });
+        });
+        btnCancel.addEventListener('click', () => {
+            window.location.reload();
+        });
+    });
+}
+
 class Job {
     constructor(id, name, description, location, category, seniority) {
         this.id = id;
@@ -61,81 +131,11 @@ class Job {
         cardBody.appendChild(btnGroup);
         card.appendChild(cardBody);
 
-        this.AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup);
-        this.AddEventBtnEdit(btnEdit);
-        this.AddEventBtnDelete(btnDelete, card, this);
+        AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup, this);
+        AddEventBtnEdit(btnEdit, this);
+        AddEventBtnDelete(btnDelete, card, this);
 
         return card;
-    }
-
-    AddEventBtnSeeDetails(btn, description, btnGroup) {
-        btn.addEventListener('click', async () => {
-            const cards = document.getElementsByClassName('card');
-            let jobs = await GetJobs();
-            let value = jobs.map(job => job.id);
-            for (let i = 0; i < cards.length; i++) {
-                if (i !== value.indexOf(this.id)) {
-                    cards[i].classList.add('d-none');
-                }
-                else {
-                    cards[i].classList.add('min-width-500')
-                }
-            }
-            description.classList.remove('text-overflow');
-            btnGroup.classList.remove('d-none');
-            btn.classList.add('d-none');
-        })
-    }
-
-    AddEventBtnEdit(btn) {
-        btn.addEventListener('click', () => {
-            const formContainer = document.getElementById('form-container');
-            formContainer.classList.remove('d-none');
-            const frmEdit = document.getElementById('frm-edit-job');
-            let inputs = ['name', 'description', 'location', 'seniority', 'category']
-            inputs.forEach(input => {
-                document.getElementById(input).value = this[input]
-            });
-            frmEdit.addEventListener('submit', (e) => {
-                e.preventDefault();
-                let validate = true;
-                inputs.forEach((input, i) => {
-                    if (e.target[input].value == '' && i <= 2) {
-                        validate = false;
-                    }
-                    this[input] = e.target[input].value
-                });
-                if (validate) {
-                    const options = {
-                        method: 'PUT',
-                        headers: { 'Content-type': 'application/json' },
-                        body: JSON.stringify(this)
-                    }
-                    fetch(`https://62ae56a6645d00a28a07201f.mockapi.io/Jobs/${this.id}`, options).then(() => {
-                        window.location.reload();
-                    });
-
-                }
-            })
-        });
-    }
-
-    AddEventBtnDelete(btn, card) {
-        btn.addEventListener('click', () => {
-            const alert = document.getElementById('alert-delete');
-            const btnDelete = document.getElementById('confirm-delete');
-            const btnCancel = document.getElementById('cancel-delete');
-            alert.classList.remove('d-none');
-            card.classList.add('d-none');
-            btnDelete.addEventListener('click', () => {
-                fetch(`https://62ae56a6645d00a28a07201f.mockapi.io/Jobs/${this.id}`, {
-                    method: 'DELETE'
-                }).then(() => { window.location.reload(); });
-            });
-            btnCancel.addEventListener('click', () => {
-                window.location.reload();
-            });
-        });
     }
 }
 
@@ -145,7 +145,7 @@ const GetJobs = async () => {
         data.forEach((element) => {
             let job = new Job();
             job.SetAttributes(element);
-            elemen = job;
+            element = job;
             jobs.push(job)
         });
         return jobs;
