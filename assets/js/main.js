@@ -121,7 +121,21 @@ class Job {
     }
 
     AddEventBtnDelete(btn, card) {
-
+        btn.addEventListener('click', () => {
+            const alert = document.getElementById('alert-delete');
+            const btnDelete = document.getElementById('confirm-delete');
+            const btnCancel = document.getElementById('cancel-delete');
+            alert.classList.remove('d-none');
+            card.classList.add('d-none');
+            btnDelete.addEventListener('click', () => {
+                fetch(`https://62ae56a6645d00a28a07201f.mockapi.io/Jobs/${this.id}`, {
+                    method: 'DELETE'
+                }).then(() => { window.location.reload(); });
+            });
+            btnCancel.addEventListener('click', () => {
+                window.location.reload();
+            });
+        });
     }
 }
 
