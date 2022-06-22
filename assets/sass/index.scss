@@ -39,18 +39,23 @@
     margin-right: 10px;
 }
 
+.card {
+    max-width: 300px;
+
+    .card-body {
+        width: 100%;
+    }
+}
+
 .width-large {
-    width:750px;
+    max-width: none;
+    width: 750px;
 }
 
-.card-body{
-    width: 100%;
-}
-
-.btn-go-back{
+.btn-go-back {
     width: 30px;
     height: 30px;
-    background-image:url("../images/atras.png");
+    background-image: url("../images/atras.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100%;
