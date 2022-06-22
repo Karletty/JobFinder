@@ -1,3 +1,51 @@
+.btn {
+  margin: 10px 0 0 0;
+}
 
+.alert {
+  margin: 30px 40px;
+}
+.alert .btn {
+  margin: 0 0 0 20px;
+}
+.alert p {
+  margin-bottom: 0;
+}
+
+#frm-filter {
+  display: flex;
+  justify-content: space-around;
+}
+#frm-filter .btn {
+  min-width: 100px;
+  margin: 0 10px;
+}
+#frm-filter .form-select {
+  max-width: 250px;
+  min-width: 200px;
+  margin: 0 10px;
+}
+
+.spinner-border {
+  width: 100px;
+  height: 100px;
+}
+
+.m-right-10 {
+  margin-right: 10px;
+}
+
+.min-width-500 {
+  min-width: 500px;
+}
+
+small {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#frm-edit-job .form-control {
+  margin-bottom: 20px;
+}
 
 /*# sourceMappingURL=index.css.map */
