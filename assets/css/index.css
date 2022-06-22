@@ -35,12 +35,16 @@
   margin-right: 10px;
 }
 
-.width-large {
-  width: 750px;
+.card {
+  max-width: 300px;
+}
+.card .card-body {
+  width: 100%;
 }
 
-.card-body {
-  width: 100%;
+.width-large {
+  max-width: none;
+  width: 750px;
 }
 
 .btn-go-back {
