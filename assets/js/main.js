@@ -1,16 +1,12 @@
-const AddEventBtnSeeDetails = (btn, description, btnGroup, btnGoBack, job) => {
+const AddEventBtnSeeDetails = (btn, description, btnGroup, btnGoBack, job, card) => {
     btn.addEventListener('click', async () => {
         const cards = document.getElementsByClassName('card');
         let jobs = await GetJobs();
-        let value = jobs.map(job => job.id);
         for (let i = 0; i < cards.length; i++) {
-            if (i !== value.indexOf(job.id)) {
-                cards[i].classList.add('d-none');
-            }
-            else {
-                cards[i].classList.add('width-large')
-            }
+            cards[i].classList.add('d-none');
         }
+        card.classList.add('width-large');
+        card.classList.remove('d-none');
         btnGoBack.classList.remove('d-none');
         description.classList.remove('text-overflow');
         btnGroup.classList.remove('d-none');
@@ -113,6 +109,7 @@ class Job {
         });
 
         card.setAttribute('class', 'card m-3');
+        card.setAttribute('id', this.id)
         cardBody.setAttribute('class', 'card-body');
         title.setAttribute('class', 'card-title');
         btnGoBack.setAttribute('class', 'btn btn-go-back d-none');
@@ -140,7 +137,7 @@ class Job {
         cardBody.appendChild(btnGroup);
         card.appendChild(cardBody);
 
-        AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup, btnGoBack, this);
+        AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup, btnGoBack, this, card);
         AddEventBtnEdit(btnEdit, this);
         AddEventBtnDelete(btnDelete, card, this);
 
