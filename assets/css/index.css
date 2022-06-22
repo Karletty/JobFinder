@@ -35,8 +35,24 @@
   margin-right: 10px;
 }
 
-.min-width-500 {
-  min-width: 500px;
+.width-large {
+  width: 750px;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.btn-go-back {
+  width: 30px;
+  height: 30px;
+  background-image: url("../images/atras.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  box-sizing: border-box;
+  margin: 0 10px 0 0;
+  padding: 0;
 }
 
 small {
@@ -46,6 +62,31 @@ small {
 
 #frm-edit-job .form-control {
   margin-bottom: 20px;
+}
+
+.container#jobs-container {
+  max-width: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1010px) {
+  #frm-filter {
+    margin: auto;
+    flex-direction: column;
+  }
+  #frm-filter .form-select {
+    max-width: none;
+    min-width: none;
+    margin: 10px 0;
+  }
+  #frm-filter .btn {
+    min-width: none;
+    margin: 10px 0;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */
