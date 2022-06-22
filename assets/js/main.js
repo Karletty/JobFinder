@@ -1,4 +1,4 @@
-const AddEventBtnSeeDetails = (btn, description, btnGroup, job) => {
+const AddEventBtnSeeDetails = (btn, description, btnGroup, btnGoBack, job) => {
     btn.addEventListener('click', async () => {
         const cards = document.getElementsByClassName('card');
         let jobs = await GetJobs();
@@ -8,12 +8,17 @@ const AddEventBtnSeeDetails = (btn, description, btnGroup, job) => {
                 cards[i].classList.add('d-none');
             }
             else {
-                cards[i].classList.add('min-width-500')
+                cards[i].classList.add('width-large')
             }
         }
+        btnGoBack.classList.remove('d-none');
         description.classList.remove('text-overflow');
         btnGroup.classList.remove('d-none');
         btn.classList.add('d-none');
+
+        btnGoBack.addEventListener('click', () => {
+            window.location.reload();
+        })
     })
 }
 
@@ -91,6 +96,7 @@ class Job {
         const card = document.createElement('div');
         const cardBody = document.createElement('div');
         const title = document.createElement('h5');
+        const btnGoBack = document.createElement('button');
         const description = document.createElement('p');
         const tags = document.createElement('div');
         const btnSeeDetails = document.createElement('button');
@@ -106,15 +112,18 @@ class Job {
             }
         });
 
-        card.setAttribute('class', 'card m-3 mx-width-18');
+        card.setAttribute('class', 'card m-3');
         cardBody.setAttribute('class', 'card-body');
-        title.setAttribute('class', 'card-title')
+        title.setAttribute('class', 'card-title');
+        btnGoBack.setAttribute('class', 'btn btn-go-back d-none');
         description.setAttribute('class', 'card-text text-overflow');
         btnSeeDetails.setAttribute('class', 'btn btn-outline-info btn-see-details');
         btnGroup.setAttribute('class', 'd-none');
         btnEdit.setAttribute('class', 'btn btn-success m-right-10');
         btnDelete.setAttribute('class', 'btn btn-danger');
         tags.setAttribute('class', 'd-flex flex-wrap')
+
+        title.appendChild(btnGoBack);
 
         description.appendChild(document.createTextNode(this.description));
         title.appendChild(document.createTextNode(this.name));
@@ -131,7 +140,7 @@ class Job {
         cardBody.appendChild(btnGroup);
         card.appendChild(cardBody);
 
-        AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup, this);
+        AddEventBtnSeeDetails(btnSeeDetails, description, btnGroup, btnGoBack, this);
         AddEventBtnEdit(btnEdit, this);
         AddEventBtnDelete(btnDelete, card, this);
 
