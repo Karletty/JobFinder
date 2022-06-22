@@ -12,11 +12,61 @@
     <link rel="stylesheet" href="/assets/css/index.css">
 </head>
 <body>
-    <nav>
-
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-briefcase"></i>
+                Job Finder
+            </a>
+            <button class="navbar-toggler btn" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="/createJob.html" class="nav-link">Create Job</a>
+                </div>
+            </div>
+        </div>
     </nav>
     <main>
+        <div class="container m-top-30">
+            <form action="" class="d-flex" id="frm-filter">
+                <select name="location" id="filter-location" class="form-select"></select>
+                <select name="seniority" id="filter-seniority" class="form-select"></select>
+                <select name="category" id="filter-category" class="form-select"></select>
+                <button type="submit" class="btn btn-info" id="btn-filter">Search</button>
+                <button type="reset" class="btn btn-outline-info" id="btn-clear-filters">Clear</button>
+            </form>
+        </div>
+        <div class="d-flex justify-content-center m-top-30" id="loader-container">
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="container d-flex flex-wrap" id="jobs-container">
 
+        </div>
+        <div class="container m-top-30 d-none" id="form-container">
+            <form id="frm-edit-job">
+                <label for="name" class="form-label">Job Title</label>
+                <input type="text" name="name" id="name" class="form-control">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" id="description" cols="30" rows="3" class="form-control"></textarea>
+                <label for="tags" class="form-label">Tags</label>
+                <input type="text" name="location" id="location" placeholder="Location" class="form-control">
+                <input type="text" name="seniority" id="seniority" placeholder="Seniority" class="form-control">
+                <input type="text" name="category" id="category" placeholder="Category" class="form-control">
+                <button type="submit" id="btn-edit-job" class="btn btn-success">Edit</button>
+            </form>
+        </div>
+        <div class="alert alert-danger d-none d-flex align-items-center" id="alert-delete">
+            <p>Are you sure to delete this job?</p>
+            <button class="btn btn-danger" id="confirm-delete">Delete job</button>
+            <button class="btn btn-secondary" id="cancel-delete">Cancel</button>
+        </div>
     </main>
     <footer>
         
